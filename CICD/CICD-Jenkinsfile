@@ -60,7 +60,7 @@ stage ('---------- build ---------------') {
 	finding parent pom version to create Docker tags
 	*/
    pomFile = readMavenPom file: projectToBuild+'/pom.xml'
-   dockerImagesTagVersion = pomFile.parent.version
+   dockerImagesTagVersion = pomFile.version
    echo dockerImagesTagVersion
  
 	  
