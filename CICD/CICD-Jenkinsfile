@@ -10,7 +10,6 @@ node {
  
  stage('------- Checkout --------') {
   // Checkout only pre-registration Module
-  dir(branch) {
    checkout([$class: 'GitSCM',
     branches: [
      [name: 'master']
@@ -19,7 +18,6 @@ node {
      [url: gitUrl, credentialsId:gitCredentials ]
     ]
    ])
-  }
  }
 
  stage('--------- Artifactory configuration ----------------') {
@@ -33,7 +31,7 @@ node {
 stage ('---------- build ---------------') {
          
 	// for building java projects
-        rtMaven.run pom: branch + '/' + projectToBuild + '/pom.xml', goals: 'clean install', buildInfo: buildInfo
+        rtMaven.run pom: 'master' + '/' + projectToBuild + '/pom.xml', goals: 'clean install', buildInfo: buildInfo
  }
 
  stage('---------- SonarQube Analysis --------------') {
