@@ -36,7 +36,7 @@ stage ('---------- build ---------------') {
 
  stage('---------- SonarQube Analysis --------------') {
   def mvnHome = tool name: 'M2_HOME', type: 'maven'
-  withSonarQubeEnv('sonar') {
+  withSonarQubeEnv('SonarQube') {
    sh "${mvnHome}/bin/mvn -f '$branch/$projectToBuild/' sonar:sonar"
   }
  }
