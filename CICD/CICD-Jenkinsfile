@@ -31,7 +31,7 @@ node {
 stage ('---------- build ---------------') {
          
 	// for building java projects
-        rtMaven.run pom: 'master' + '/' + projectToBuild + '/pom.xml', goals: 'clean install', buildInfo: buildInfo
+        rtMaven.run pom: projectToBuild + '/pom.xml', goals: 'clean install', buildInfo: buildInfo
  }
 
  stage('---------- SonarQube Analysis --------------') {
