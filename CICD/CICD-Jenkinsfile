@@ -6,7 +6,7 @@ node {
  def dockerImagesTagVersion = 'NaV'  //This will ensure that docker images tag should have 1-1 relation ship with project version
  projectToBuild = 'CICD'
  def gitUrl = 'https://github.com/RajathKumarKR/CICD/CICD/'
- def gitCredentials = RajathKumarKR
+ def gitCredentials = 'RajathKumarKR'
  
  stage('------- Checkout --------') {
   // Checkout only pre-registration Module
