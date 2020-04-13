@@ -48,10 +48,6 @@ stage ('---------- build ---------------') {
   server.publishBuildInfo buildInfo
  }
  
- stage('------ Deploy -------') {
-
-   sh "java -jar http://35.202.96.224:8081/artifactory/libs-snapshot-local/io/ci/cd/CICD/0.0.1-SNAPSHOT/CICD-0.0.1-20200413.112125-8.jar"
- }
     
 	}
  // Catching the exception for triggering email
