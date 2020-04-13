@@ -3,31 +3,21 @@ node {
  def server = Artifactory.server 'Artifactory'
  def rtMaven = Artifactory.newMavenBuild()
  def buildInfo
- def branch = params.BRANCH_NAME
  def dockerImagesTagVersion = 'NaV'  //This will ensure that docker images tag should have 1-1 relation ship with project version
  projectToBuild = 'CICD'
- def gitUrl = params.GIT_URL
- def gitCredentials = params.GIT_CREDENTIALS
+ def gitUrl = 'https://github.com/RajathKumarKR/CICD/CICD/'
+ def gitCredentials = RajathKumarKR
  
  stage('------- Checkout --------') {
   // Checkout only pre-registration Module
   dir(branch) {
    checkout([$class: 'GitSCM',
     branches: [
-     [name: branch]
+     [name: 'master']
     ],
     userRemoteConfigs: [
      [url: gitUrl, credentialsId:gitCredentials ]
-    ],
-    extensions: [
-
-     [$class: 'PathRestriction', excludedRegions: '', includedRegions: projectToBuild + '/.*'],
-     //[$class: 'CloneOption', noTags: false, reference: '', shallow: true, timeout: 120, depth: 1, refspec:"+refs/heads/"+branch+":refs/remotes/origin/"+branch],
-     [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
-      [$class: 'SparseCheckoutPath', path: '/' + projectToBuild + '/']
-     ]]
-
-    ],
+    ]
    ])
   }
  }
@@ -80,58 +70,5 @@ stage ('---------- build ---------------') {
 		// sending email to kernel recipients
 	}
 	}
-}
-
-@NonCPS
-def getChangedModulesPaths() {
- Set modifiedModulePaths = [] as TreeSet
-
- /*
- ChangeSets until last build
- */
- def changeLogSets = currentBuild.changeSets
-
- /*
- A treeSet to store paths of all the files that have been changed until last build
- */
- Set affectedPaths = [] as TreeSet
- for (int i = 0; i < changeLogSets.size(); i++) {
-  def entries = changeLogSets[i].items 
-  for (int j = 0; j < entries.length; j++) {
-   def entry = entries[j]
-   echo "${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}"
-   affectedPaths.addAll(entry.affectedPaths);
-   }
-  }
-  /*
-  Filtering all the modules from affected path that do not belong to project to build
-  */
-  echo "affected paths are :" + affectedPaths
-  affectedPaths.retainAll{it.startsWith(projectToBuild)}
-  echo "affected paths after retaining only kernel modules are --------:" + affectedPaths
-for (int i = 0; i < locationOfDockerFiles.size(); i++) {
-        /*
-        If there is no Dockerfile present in the Services
-        */
-        if(locationOfDockerFiles[i].equals("")){
-        	break;
-        }
-	/*
-        Checking if the paths affected belong to modules that have to be deployed
-        */
-		if(affectedPaths.any{it.startsWith(locationOfDockerFiles[i].substring(2))}){
-			modifiedModulePaths.add(locationOfDockerFiles[i])
-            /*
-            Removing affected paths that belong to same module (Because we have already taken
-            into consideration this module)
-            */
-			affectedPaths.removeAll{it.startsWith(locationOfDockerFiles[i].substring(2))}
-		}
-		
-		
-	
-  }
-	echo "paths of modules to be built ::::::::::::>" + modifiedModulePaths
- 	return modifiedModulePaths
 }
 
