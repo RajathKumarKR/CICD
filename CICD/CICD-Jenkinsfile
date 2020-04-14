@@ -48,7 +48,14 @@ stage ('---------- build ---------------') {
   server.publishBuildInfo buildInfo
  }
  
-    
+   
+  stage('----------- Deploy-------------') {
+  /*
+  Publishing build info to Artifcatory (JFrog)
+  */
+  sh 'docker build -t cicd .'
+ }
+ 
 	}
  // Catching the exception for triggering email
   catch (exception) {
