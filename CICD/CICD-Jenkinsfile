@@ -53,6 +53,7 @@ stage ('---------- build ---------------') {
   /*
   Publishing build info to Artifcatory (JFrog)
   */
+  
   sh 'sudo docker build -f CICD/Dockerfile -t cicd .'
  }
  
