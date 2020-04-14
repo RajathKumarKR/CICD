@@ -58,7 +58,7 @@ stage ('---------- build ---------------') {
   //sh 'sudo docker push cicdrajath/cicd.1249:cicd'
   //sh 'sudo docker run -d -p 8084:8084 cicdrajath/cicd.1249:cicd'
   
-     docker.withRegistry('https://hub.docker.com', 'Docker') {
+     docker.withRegistry('https://hub.docker.com/repository/docker/cicdrajath/cicd.1249', 'Docker') {
       newApp = docker.build('cicdrajath/cicd.1249:cicd', '-f  CICD/Dockerfile')
       newApp.push()
       newApp.push 'latest'
