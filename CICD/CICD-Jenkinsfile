@@ -54,7 +54,7 @@ stage ('---------- build ---------------') {
   Publishing build info to Artifcatory (JFrog)
   */
   
-  sh 'sudo docker build -f CICD/Dockerfile -t cicd .'
+  sh 'sudo docker build -f CICD/Dockerfile -t cicdrajath/cicd.1249:cicd .'
   sh 'sudo docker push cicdrajath/cicd.1249:cicd'
   sh 'sudo docker run -d -p 8084:8084 cicdrajath/cicd.1249:cicd'
  }
