@@ -7,4 +7,4 @@ copy ./target/CICD-*.jar CICD.jar
 
 EXPOSE 9092
 
-CMD ["java",,"-jar","CICD.jar"]
+CMD ["java","-jar","CICD.jar"]

@@ -27,6 +27,11 @@ public class EmployeeController
  
         return new ResponseEntity<List<EmployeeEntity>>(list, new HttpHeaders(), HttpStatus.OK);
     }
+    
+    @GetMapping("/rajath")
+    public ResponseEntity<String> getAll() { 
+        return new ResponseEntity<String>("Rajath", new HttpHeaders(), HttpStatus.OK);
+    }
  
 //    @GetMapping("/{id}")
 //    public ResponseEntity<EmployeeEntity> getEmployeeById(@PathVariable("id") Long id)
